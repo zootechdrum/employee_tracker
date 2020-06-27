@@ -1,3 +1,4 @@
+const DB = require('./db')
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const figlet = require('figlet');
@@ -17,31 +18,16 @@ function startAnimation(){
         type: "rawlist",
         message: "What would you like to do?",
         choices: [
-          "View all employees"
+          "View all employees",
+          "View Departments"
         ]
       })
       .then(function(answer) {
+
         switch (answer.action) {
-        case "Find songs by artist":
-          artistSearch();
-          break;
-  
-        case "Find all artists who appear more than once":
-          multiSearch();
-          break;
-  
-        case "Find data within a specific range":
-          rangeSearch();
-          break;
-  
-        case "Search for a specific song":
-          songSearch();
-          break;
-  
-        case "Find artists with a top song and top album in the same year":
-          songAndAlbumSearch();
-          break;
+        case "View all employees":
+          console.log(DB.seeAllEmployees());
         }
-      });
+    });
   }
 runLookUp();
