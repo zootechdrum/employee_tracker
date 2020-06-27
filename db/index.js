@@ -11,7 +11,14 @@ class DB {
             if (err) throw err;
             console.table(res)
         })
-
+    }
+    addRole(role) {
+        connection.query(
+            "INSERT INTO Role SET ?", role, (err, res) => {
+                if(err) throw err;
+                console.log("Added Role to the Database!")
+            }
+        )
     }
 }
 
