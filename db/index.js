@@ -11,11 +11,19 @@ class DB {
             cb(res)
         })
     }
-    addRole(role) {
-        connection.query(
+    addRole(role , cb) {
+        this.connection.query(
             "INSERT INTO Role SET ?", role, (err, res) => {
                 if(err) throw err;
-                console.log("Added Role to the Database!")
+                cb("Added Role to the Database!");
+            }
+        )
+    }
+    addDepartment(department , cb){
+        this.connection.query(
+            "INSERT INTO Department SET ?", department, (err, res) => {
+                if (err) throw err;
+                console.log("Added Department to Department Table!")
             }
         )
     }

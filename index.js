@@ -17,7 +17,7 @@ function beginPrompt() {
       name: "action",
       type: "rawlist",
       message: "What would you like to do?",
-      choices: ["View all employees", "Add Role"],
+      choices: ["View all employees", "Add Role", "Add Department"],
     })
     .then(function (answer) {
       switch (answer.action) {
@@ -26,6 +26,9 @@ function beginPrompt() {
           break;
         case "Add Role":
           roleToAdd();
+          break;
+        case "Add Department":
+          addDepartment();
           break;
       }
     });
@@ -54,8 +57,30 @@ function roleToAdd() {
       },
     ])
     .then(function (answer) {
-      DB.addRole(answer);
+      DB.addRole(answer , function (text){
+        console.log(chalk.yellow(text));
+        beginPrompt()
+      });
     });
 }
+
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "department_name",
+        type: "input",
+        message: "What is the name of the department you want to add ?",
+      },
+    ])
+    .then(function (answer) {
+      DB.addDepartment(answer);
+      beginPrompt();
+    });
+}
+
+
+
+
 startAnimation();
 beginPrompt();
