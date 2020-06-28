@@ -2,6 +2,7 @@ const DB = require("./db");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
 const figlet = require("figlet");
+const cTable = require('console.table');
 
 function startAnimation() {
   console.log(
@@ -22,7 +23,12 @@ function runLookUp() {
     .then(function (answer) {
       switch (answer.action) {
         case "View all employees":
-          DB.seeAllEmployees();
+          DB.seeAllEmployees(function cb(res){
+            console.table(res);
+            runLookUp()
+          })
+          break;
+
         case "Add Role":
           roleToAdd();
       }
