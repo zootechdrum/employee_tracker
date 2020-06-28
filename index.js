@@ -2,7 +2,7 @@ const DB = require("./db");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
 const figlet = require("figlet");
-const cTable = require('console.table');
+const cTable = require("console.table");
 
 function startAnimation() {
   console.log(
@@ -11,8 +11,7 @@ function startAnimation() {
     )
   );
 }
-function runLookUp() {
-  startAnimation();
+function beginPrompt() {
   inquirer
     .prompt({
       name: "action",
@@ -23,16 +22,21 @@ function runLookUp() {
     .then(function (answer) {
       switch (answer.action) {
         case "View all employees":
-          DB.seeAllEmployees(function cb(res){
-            console.table(res);
-            runLookUp()
-          })
+          findAllEmployee();
           break;
-
         case "Add Role":
           roleToAdd();
+          break;
       }
     });
+}
+
+function findAllEmployee() {
+  DB.seeAllEmployees(function cb(res) {
+    console.table(res);
+    beginPrompt();
+  });
+
 }
 
 function roleToAdd() {
@@ -50,7 +54,8 @@ function roleToAdd() {
       },
     ])
     .then(function (answer) {
-      DB.addRole(answer)
+      DB.addRole(answer);
     });
 }
-runLookUp();
+startAnimation();
+beginPrompt();

@@ -5,7 +5,7 @@ class DB {
       this.connection = connection;
     }
     seeAllEmployees(cb){
-        var query =  "SELECT Employee.first_name, Employee.last_name, Role.title, Role.Salary, Department.department_name FROM Employee LEFT JOIN Role ON Employee.role_id = Role.id LEFT JOIN Department ON Role.department_id = Department.id;"
+        var query =  "SELECT Employee.id, Employee.first_name AS `First Name`, Employee.last_name AS `Last Name`, Role.title, Role.salary, concat(Manager.first_name, ' ', Manager.last_name) as Manager FROM Employee LEFT JOIN Role ON Employee.role_id = Role.id LEFT JOIN Department ON Employee.role_id = Department.id LEFT JOIN Employee As Manager ON  Manager.id =  Employee.manager_id;"
         connection.query(query, (err,res) => {
             if (err) throw err;
             cb(res)
