@@ -17,12 +17,20 @@ function beginPrompt() {
       name: "action",
       type: "rawlist",
       message: "What would you like to do?",
-      choices: ["View all employees", "Add Role", "Add Department"],
+      choices: [
+        "View all employees",
+        "View all Roles",
+        "Add Role",
+        "Add Department",
+      ],
     })
     .then(function (answer) {
       switch (answer.action) {
         case "View all employees":
           findAllEmployee();
+          break;
+        case "View all Roles":
+          findAllRoles();
           break;
         case "Add Role":
           roleToAdd();
@@ -39,8 +47,9 @@ function findAllEmployee() {
     console.table(res);
     beginPrompt();
   });
-
 }
+
+function findAllRoles() {}
 
 function roleToAdd() {
   inquirer
@@ -57,9 +66,9 @@ function roleToAdd() {
       },
     ])
     .then(function (answer) {
-      DB.addRole(answer , function (text){
+      DB.addRole(answer, function (text) {
         console.log(chalk.yellow(text));
-        beginPrompt()
+        beginPrompt();
       });
     });
 }
@@ -78,9 +87,6 @@ function addDepartment() {
       beginPrompt();
     });
 }
-
-
-
 
 startAnimation();
 beginPrompt();
