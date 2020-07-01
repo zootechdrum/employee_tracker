@@ -83,8 +83,10 @@ function addDepartment() {
       },
     ])
     .then(function (answer) {
-      DB.addDepartment(answer);
-      beginPrompt();
+      DB.addDepartment(answer, function (text) {
+        console.log(chalk.yellow(text));
+        beginPrompt();
+      });
     });
 }
 

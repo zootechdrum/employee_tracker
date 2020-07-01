@@ -27,7 +27,7 @@ class DB {
       department,
       (err, res) => {
         if (err) throw err;
-        console.log("Added Department to Department Table!");
+        cb("Added Department!");
       }
     );
   }
