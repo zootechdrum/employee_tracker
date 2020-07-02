@@ -21,6 +21,13 @@ class DB {
       cb("Added Role to the Database!");
     });
   }
+
+  findAllDepartments(role, cb) {
+    this.connection.query("SELECT * FROM Department ", role, (err, res) => {
+      if (err) throw err;
+      cb("Added Role to the Database!");
+    });
+  }
   addDepartment(department, cb) {
     this.connection.query(
       "INSERT INTO Department SET ?",
