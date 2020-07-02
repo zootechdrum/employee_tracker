@@ -26,6 +26,7 @@ class DB {
     this.connection.query("SELECT * FROM Department", (err, res) => {
       if (err) throw err;
       console.log(res);
+      ?Hello
       cb(res);
     });
   }
