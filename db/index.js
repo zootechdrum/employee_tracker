@@ -13,7 +13,21 @@ class DB {
     });
   }
 
-  findAllRoles(cb) {}
+  findAllRoles(cb) {
+    this.connection.query("SELECT * FROM Role", (err, res) => {
+      cb(res);
+    });
+  }
+  updateEmployeRole({ employeeToUpdate, setRole }, cb) {
+    console.log(setRole);
+    this.connection.query(
+      "UPDATE Employee SET role_id = ? WHERE id = ?",
+      [setRole, employeeToUpdate],
+      (err, res) => {
+        console.log(res);
+      }
+    );
+  }
 
   addRole(role, cb) {
     this.connection.query("INSERT INTO Role SET ?", role, (err, res) => {
@@ -26,7 +40,6 @@ class DB {
     this.connection.query("SELECT * FROM Department", (err, res) => {
       if (err) throw err;
       console.log(res);
-      ?Hello
       cb(res);
     });
   }

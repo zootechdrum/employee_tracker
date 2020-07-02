@@ -23,6 +23,7 @@ function beginPrompt() {
         "Add Role",
         "Add Department",
         "View all Departments",
+        "Update Employee Role",
       ],
     })
     .then(function (answer) {
@@ -41,6 +42,9 @@ function beginPrompt() {
           break;
         case "View all Departments":
           viewAllDepartments();
+          break;
+        case "Update Employee Role":
+          updateEmployeeRole();
           break;
       }
     });
@@ -101,6 +105,48 @@ function addDepartment() {
         beginPrompt();
       });
     });
+}
+function updateEmployeeRole() {
+  let listOfEmployees = [];
+  let listOfRoles = [];
+
+  DB.findAllEmployees(function cb(res) {
+    listOfEmployees = res.map((result) => ({
+      name: result["First Name"],
+      value: result.id,
+    }));
+
+    DB.findAllRoles(function cb(res) {
+      console.log(res);
+      listOfRoles = res.map((result) => ({
+        name: result.title,
+        value: result.id,
+      }));
+
+      inquirer
+        .prompt([
+          {
+            name: "employeeToUpdate",
+            type: "rawlist",
+            message: "Choose the employee you want to update the role for",
+            choices: listOfEmployees,
+          },
+          {
+            name: "setRole",
+            type: "rawlist",
+            message: "What new role did you want to give employee?",
+            choices: listOfRoles,
+          },
+        ])
+        .then(function (answer) {
+          console.log(answer);
+          DB.updateEmployeRole(answer, function (text) {
+            console.log(chalk.yellow(text));
+            beginPrompt();
+          });
+        });
+    });
+  });
 }
 
 startAnimation();

@@ -11,9 +11,3 @@ INSERT INTO Employee ( first_name, last_name, role_id, manager_id  ) VALUES
 ('Cesar', 'Gomez', 1, 2),
 ('Virginia', 'Lopez', 2, 1),
 ("Niko" , "Grillo", 1, 2);
-
--- Left join to select all Roles and show department_id
--- SELECT Role.id, Role.title, Role.salary, Department.department_name
--- FROM
--- Role
--- LEFT JOIN Department  ON Role.department_id = Department.id;
