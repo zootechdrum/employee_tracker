@@ -22,10 +22,11 @@ class DB {
     });
   }
 
-  findAllDepartments(role, cb) {
-    this.connection.query("SELECT * FROM Department ", role, (err, res) => {
+  findAllDepartments(cb) {
+    this.connection.query("SELECT * FROM Department", (err, res) => {
       if (err) throw err;
-      cb("Added Role to the Database!");
+      console.log(res);
+      cb(res);
     });
   }
   addDepartment(department, cb) {

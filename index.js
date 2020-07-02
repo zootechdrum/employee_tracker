@@ -22,12 +22,13 @@ function beginPrompt() {
         "View all Roles",
         "Add Role",
         "Add Department",
+        "View all Departments",
       ],
     })
     .then(function (answer) {
       switch (answer.action) {
         case "View all employees":
-          findAllEmployee();
+          viewAllEmployees();
           break;
         case "View all Roles":
           findAllRoles();
@@ -38,11 +39,14 @@ function beginPrompt() {
         case "Add Department":
           addDepartment();
           break;
+        case "View all Departments":
+          viewAllDepartments();
+          break;
       }
     });
 }
 
-function findAllEmployee() {
+function viewAllEmployees() {
   DB.seeAllEmployees(function cb(res) {
     console.table(res);
     beginPrompt();
@@ -71,6 +75,15 @@ function roleToAdd() {
         beginPrompt();
       });
     });
+}
+
+function viewAllDepartments() {
+  DB.findAllDepartments(function (result) {
+    if (result) {
+      console.table(result);
+    }
+  });
+  beginPrompt();
 }
 
 function addDepartment() {
