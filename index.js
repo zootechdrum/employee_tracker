@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const chalk = require("chalk");
 const figlet = require("figlet");
 const cTable = require("console.table");
+const { findEmployeeByManager } = require("./db");
 
 function startAnimation() {
   console.log(
@@ -24,6 +25,7 @@ function beginPrompt() {
         "Add Department",
         "View all Departments",
         "Update Employee Role",
+        "View Employees by Manger",
       ],
     })
     .then(function (answer) {
@@ -46,12 +48,15 @@ function beginPrompt() {
         case "Update Employee Role":
           updateEmployeeRole();
           break;
+        case "View Employees by Manger":
+          viewEmployeesByManager();
+          break;
       }
     });
 }
 
 function viewAllEmployees() {
-  DB.seeAllEmployees(function cb(res) {
+  DB.findAllEmployees(function cb(res) {
     console.table(res);
     beginPrompt();
   });
@@ -146,6 +151,31 @@ function updateEmployeeRole() {
           });
         });
     });
+  });
+}
+function viewEmployeesByManager() {
+  let listOfManagers = [];
+
+  DB.findAllManagers(function (managers) {
+    listOfManagers = managers.map((manager) => ({
+      name: manager.first_name,
+      value: manager.id,
+    }));
+
+    inquirer
+      .prompt([
+        {
+          name: "managerId",
+          type: "list",
+          message: "Please choose a manager",
+          choices: listOfManagers,
+        },
+      ])
+      .then(function (answer) {
+        findEmployeeByManager(answer, function (employee) {
+          console.table(employee);
+        });
+      });
   });
 }
 

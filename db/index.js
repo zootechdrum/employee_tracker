@@ -50,6 +50,24 @@ class DB {
       }
     );
   }
+  findAllManagers(cb) {
+    this.connection.query(
+      "SELECT Employee.first_name, Employee.id FROM Employee Inner Join Employee as manager ON Employee.id = manager.manager_id Group by employee.first_name, Employee.id;",
+      (err, res) => {
+        cb(res);
+      }
+    );
+  }
+  findEmployeeByManager({ managerId }, cb) {
+    //console.log(managerId);
+    connection.query(
+      "SELECT Concat(first_name, ' ', last_name) as 'Full Name' FROM Employee WHERE manager_id = ?",
+      [managerId],
+      (err, res) => {
+        cb(res);
+      }
+    );
+  }
 }
 
 module.exports = new DB(connection);
