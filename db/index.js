@@ -19,7 +19,6 @@ class DB {
     });
   }
   updateEmployeRole({ employeeToUpdate, setRole }, cb) {
-    console.log(setRole);
     this.connection.query(
       "UPDATE Employee SET role_id = ? WHERE id = ?",
       [setRole, employeeToUpdate],
@@ -35,11 +34,9 @@ class DB {
       cb("Added Role to the Database!");
     });
   }
-
   findAllDepartments(cb) {
     this.connection.query("SELECT * FROM Department", (err, res) => {
       if (err) throw err;
-      console.log(res);
       cb(res);
     });
   }
