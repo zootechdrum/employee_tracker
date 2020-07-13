@@ -51,6 +51,9 @@ function beginPrompt() {
         case "View Employees by Manger":
           viewEmployeesByManager();
           break;
+        default:
+          beginPrompt();
+          break;
       }
     });
 }
